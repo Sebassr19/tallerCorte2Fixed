@@ -127,3 +127,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemRecolectable
   _itemData: {fileID: 11400000, guid: 7f2d2011e081aaf4cb1f49cf46030dbc, type: 2}
+  sonidoRecolectar: {fileID: 8300000, guid: 467ce2c4bf894294483739db87f674fd, type: 3}

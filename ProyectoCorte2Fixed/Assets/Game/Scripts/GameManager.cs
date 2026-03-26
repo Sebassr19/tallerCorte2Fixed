@@ -46,12 +46,12 @@ public class GameManager : MonoBehaviour
 
     public void TotalItem(ItemData item)
     {
-        switch(item.itemType)
+        switch (item.itemType)
         {
             case ItemType.Apple:
                 totalApple += item.itemValue;
                 break;
-                case ItemType.Orange:
+            case ItemType.Orange:
                 totalOrange += item.itemValue;
                 break;
             case ItemType.Banana:

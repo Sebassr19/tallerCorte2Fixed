@@ -1,0 +1,80 @@
+{
+  "Coleccionables": [
+    {
+      "id": "Apple",
+      "nombre": "Apple",
+      "rareza": "Raro",
+      "valor": 15,
+      "iconId": "Apple"
+    },
+    {
+      "id": "Bananas",
+      "nombre": "Bananas",
+      "rareza": "Normal",
+      "valor": 10,
+      "iconId": "Bananas"
+    },
+    {
+      "id": "Kiwi",
+      "nombre": "Kiwi",
+      "rareza": "Épico",
+      "valor": 25,
+      "iconId": "Kiwi"
+    },
+    {
+      "id": "Melon",
+      "nombre": "Melon",
+      "rareza": "Legendario",
+      "valor": 50,
+      "iconId": "Melon"
+    },
+    {
+      "id": "Orange",
+      "nombre": "Orange",
+      "rareza": "Normal",
+      "valor": 12,
+      "iconId": "Orange"
+    },
+    {
+      "id": "Pineapple",
+      "nombre": "Pineapple",
+      "rareza": "Raro",
+      "valor": 18,
+      "iconId": "Pineapple"
+    },
+    {
+      "id": "Strawberry",
+      "nombre": "Strawberry",
+      "rareza": "Épico",
+      "valor": 30,
+      "iconId": "Strawberry"
+    },
+    {
+      "id": "Cherries",
+      "nombre": "Cherries",
+      "rareza": "Normal",
+      "valor": 14,
+      "iconId": "Cherries"
+    }
+  ],
+  "missions": [
+    {
+      "id": "1",
+      "titulo": "Toca la manzana",
+      "descripcion": "Recolecta tu primer manzana en el juego",
+      "coleccionable": "Apple"
+    },
+    {
+      "id": "2",
+      "titulo": "1 Mono vs 10 Bananas",
+      "descripcion": "Recolecta 10 Bananas en total",
+      "coleccionable": "Bananas"
+    },
+    {
+      "id": "3",
+      "titulo": "I have a pen, I have an apple. Uh ApplePen",
+      "descripcion": "Encuentra la piña escondida en el mapa",
+      "coleccionable": "Pineapple"
+    }
+  ]
+}
