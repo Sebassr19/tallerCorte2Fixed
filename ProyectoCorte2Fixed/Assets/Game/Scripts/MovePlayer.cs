@@ -32,7 +32,7 @@ public class MovePlayer : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
 
-        animator.SetFloat("Movement", Mathf.Abs(rb.linearVelocity.x));
+        animator.SetFloat("movement", Mathf.Abs(rb.linearVelocity.x));
 
         if (moveInput.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
