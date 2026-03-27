@@ -32,8 +32,8 @@ public class ControllerScene1 : MonoBehaviour
     {
         txtCountApple.text = GameManager.Instance.TotalApple.ToString();
         txtCountOrange.text = GameManager.Instance.TotalOrange.ToString();
-        txtCountOrange.text = GameManager.Instance.TotalKiwi.ToString();
-        txtCountOrange.text = GameManager.Instance.TotalBanana.ToString();
+        txtCountKiwi.text = GameManager.Instance.TotalKiwi.ToString();
+        txtCountBanana.text = GameManager.Instance.TotalBanana.ToString();
     }    
 
 }
