@@ -15,7 +15,7 @@ public enum ItemType
     Apple,
     Orange,
     kiwi,
-    Banana,
+    Bananas,
     Coin,
     Weapon,
     Armor

@@ -14,11 +14,11 @@ public class GameManager : MonoBehaviour
     private int totalKiwi = 0;
     private int totalBanana = 0;
 
-    private Dictionary<ItemType, int> fruitValues = new Dictionary<ItemType, int>();
+    private Dictionary<string, int> fruitValues = new Dictionary<string, int>();
 
-    void Awake()
+    private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (!ReferenceEquals(Instance, null) && !ReferenceEquals(Instance, this))
         {
             Destroy(gameObject);
             return;
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         LoadGameData();
     }
 
-    void Start()
+    private void Start()
     {
         globalTime = 0;
     }
@@ -40,38 +40,50 @@ public class GameManager : MonoBehaviour
         globalTime += timeScene;
     }
 
-    public void TotalItem(ItemData item)
+    public void SumarItem(string itemName, int itemValue)
     {
-        int valueToAdd = GetFruitValue(item);
+        int valueToAdd = GetValueFromJson(itemName, itemValue);
 
-        switch (item.itemType)
+        switch (itemName)
         {
-            case ItemType.Apple:
+            case "Apple":
                 totalApple += valueToAdd;
+                Debug.Log("Total Apple: " + totalApple);
                 break;
-            case ItemType.Orange:
+
+            case "Orange":
                 totalOrange += valueToAdd;
+                Debug.Log("Total Orange: " + totalOrange);
                 break;
-            case ItemType.Banana:
+
+            case "Banana":
+            case "Bananas":
                 totalBanana += valueToAdd;
+                Debug.Log("Total Banana: " + totalBanana);
                 break;
-            case ItemType.kiwi:
+
+            case "Kiwi":
+            case "kiwi":
                 totalKiwi += valueToAdd;
+                Debug.Log("Total Kiwi: " + totalKiwi);
+                break;
+
+            default:
+                Debug.LogWarning("Item no reconocido: " + itemName);
                 break;
         }
-
-        Debug.Log($"Se sumaron {valueToAdd} puntos para {item.itemType}");
     }
 
-    private int GetFruitValue(ItemData item)
+    private int GetValueFromJson(string itemName, int fallbackValue)
     {
-        if (item == null)
-            return 0;
+        if (string.IsNullOrEmpty(itemName))
+            return fallbackValue;
 
-        if (fruitValues.TryGetValue(item.itemType, out int jsonValue))
+        if (fruitValues.TryGetValue(itemName, out int jsonValue))
             return jsonValue;
 
-        return item.itemValue;
+        Debug.LogWarning("No se encontró valor en JSON para: " + itemName + ". Se usa el valor del ItemData.");
+        return fallbackValue;
     }
 
     private void LoadGameData()
@@ -87,27 +99,28 @@ public class GameManager : MonoBehaviour
         string json = File.ReadAllText(path);
         GameData data = JsonUtility.FromJson<GameData>(json);
 
-        if (data == null || data.fruits == null)
+        if (ReferenceEquals(data, null))
         {
-            Debug.LogWarning("GameData.json está vacío o mal estructurado");
+            Debug.LogWarning("GameData es null");
+            return;
+        }
+
+        if (ReferenceEquals(data.Coleccionables, null) || data.Coleccionables.Length < 1)
+        {
+            Debug.LogWarning("La lista Coleccionables está vacía o es null");
             return;
         }
 
         fruitValues.Clear();
 
-        foreach (FruitJson fruit in data.fruits)
+        foreach (CollectibleData collectible in data.Coleccionables)
         {
-            if (Enum.TryParse(fruit.itemType, out ItemType parsedType))
+            if (!string.IsNullOrEmpty(collectible.id))
             {
-                fruitValues[parsedType] = fruit.value;
-            }
-            else
-            {
-                Debug.LogWarning($"No se pudo leer el itemType '{fruit.itemType}' del JSON");
+                fruitValues[collectible.id] = collectible.valor;
+                Debug.Log("Cargado desde JSON: " + collectible.id + " = " + collectible.valor);
             }
         }
-
-        Debug.Log("GameData.json cargado correctamente");
     }
 
     public float GlobalTime { get => globalTime; set => globalTime = value; }
@@ -120,12 +133,25 @@ public class GameManager : MonoBehaviour
 [Serializable]
 public class GameData
 {
-    public FruitJson[] fruits;
+    public CollectibleData[] Coleccionables;
+    public MissionData[] missions;
 }
 
 [Serializable]
-public class FruitJson
+public class CollectibleData
 {
-    public string itemType;
-    public int value;
+    public string id;
+    public string nombre;
+    public string rareza;
+    public int valor;
+    public string iconId;
+}
+
+[Serializable]
+public class MissionData
+{
+    public string id;
+    public string titulo;
+    public string descripcion;
+    public string coleccionable;
 }

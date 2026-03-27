@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ControllerScene1 : MonoBehaviour
 {
-
     public Timer tiempoJuego;
 
     public TextMeshProUGUI txtCountApple;
@@ -11,30 +10,55 @@ public class ControllerScene1 : MonoBehaviour
     public TextMeshProUGUI txtCountBanana;
     public TextMeshProUGUI txtCountKiwi;
 
-    void Start()
+    private void Start()
     {
-        tiempoJuego.TimerStart();
+        if (!ReferenceEquals(tiempoJuego, null))
+        {
+            tiempoJuego.TimerStart();
+        }
+
+        ActualizarUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        ActualizarUI();
     }
 
     public void GetTimeScene()
     {
-
-        GameManager.Instance.TotalTime(tiempoJuego.StopTime);
+        if (!ReferenceEquals(GameManager.Instance, null) && !ReferenceEquals(tiempoJuego, null))
+        {
+            GameManager.Instance.TotalTime(tiempoJuego.StopTime);
+        }
     }
 
-    public void GetTotalItem()
+    private void ActualizarUI()
     {
-        txtCountApple.text = GameManager.Instance.TotalApple.ToString();
-        txtCountOrange.text = GameManager.Instance.TotalOrange.ToString();
-        txtCountKiwi.text = GameManager.Instance.TotalKiwi.ToString();
-        txtCountBanana.text = GameManager.Instance.TotalBanana.ToString();
-    }    
+        if (ReferenceEquals(GameManager.Instance, null))
+        {
+            Debug.LogWarning("GameManager.Instance es null");
+            return;
+        }
 
+        if (!ReferenceEquals(txtCountApple, null))
+            txtCountApple.text = GameManager.Instance.TotalApple.ToString();
+
+        if (!ReferenceEquals(txtCountOrange, null))
+            txtCountOrange.text = GameManager.Instance.TotalOrange.ToString();
+
+        if (!ReferenceEquals(txtCountBanana, null))
+            txtCountBanana.text = GameManager.Instance.TotalBanana.ToString();
+
+        if (!ReferenceEquals(txtCountKiwi, null))
+            txtCountKiwi.text = GameManager.Instance.TotalKiwi.ToString();
+
+        Debug.Log(
+            "UI -> Apple: " + GameManager.Instance.TotalApple +
+            " Orange: " + GameManager.Instance.TotalOrange +
+            " Banana: " + GameManager.Instance.TotalBanana +
+            " Kiwi: " + GameManager.Instance.TotalKiwi
+        );
+    }
 }
 
